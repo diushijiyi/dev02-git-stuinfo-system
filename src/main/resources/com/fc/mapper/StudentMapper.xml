@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.fc.entity.Student">
+    <id column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+    <result column="stu_pass" jdbcType="VARCHAR" property="stuPass" />
+    <result column="stu_class" jdbcType="VARCHAR" property="stuClass" />
+    <result column="stu_sex" jdbcType="INTEGER" property="stuSex" />
+    <result column="stu_tele" jdbcType="VARCHAR" property="stuTele" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    stu_id, stu_name, stu_pass, stu_class, stu_sex, stu_tele
+  </sql>
+  <select id="selectByExample" parameterType="com.fc.entity.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where stu_id = #{stuId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from student
+    where stu_id = #{stuId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fc.entity.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fc.entity.Student">
+    insert into student (stu_id, stu_name, stu_pass, 
+      stu_class, stu_sex, stu_tele
+      )
+    values (#{stuId,jdbcType=VARCHAR}, #{stuName,jdbcType=VARCHAR}, #{stuPass,jdbcType=VARCHAR}, 
+      #{stuClass,jdbcType=VARCHAR}, #{stuSex,jdbcType=INTEGER}, #{stuTele,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fc.entity.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="stuName != null">
+        stu_name,
+      </if>
+      <if test="stuPass != null">
+        stu_pass,
+      </if>
+      <if test="stuClass != null">
+        stu_class,
+      </if>
+      <if test="stuSex != null">
+        stu_sex,
+      </if>
+      <if test="stuTele != null">
+        stu_tele,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stuId != null">
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="stuName != null">
+        #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPass != null">
+        #{stuPass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClass != null">
+        #{stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSex != null">
+        #{stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="stuTele != null">
+        #{stuTele,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fc.entity.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="record.stuId != null">
+        stu_id = #{record.stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuName != null">
+        stu_name = #{record.stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuPass != null">
+        stu_pass = #{record.stuPass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuClass != null">
+        stu_class = #{record.stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuSex != null">
+        stu_sex = #{record.stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuTele != null">
+        stu_tele = #{record.stuTele,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set stu_id = #{record.stuId,jdbcType=VARCHAR},
+      stu_name = #{record.stuName,jdbcType=VARCHAR},
+      stu_pass = #{record.stuPass,jdbcType=VARCHAR},
+      stu_class = #{record.stuClass,jdbcType=VARCHAR},
+      stu_sex = #{record.stuSex,jdbcType=INTEGER},
+      stu_tele = #{record.stuTele,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fc.entity.Student">
+    update student
+    <set>
+      <if test="stuName != null">
+        stu_name = #{stuName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuPass != null">
+        stu_pass = #{stuPass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuClass != null">
+        stu_class = #{stuClass,jdbcType=VARCHAR},
+      </if>
+      <if test="stuSex != null">
+        stu_sex = #{stuSex,jdbcType=INTEGER},
+      </if>
+      <if test="stuTele != null">
+        stu_tele = #{stuTele,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stu_id = #{stuId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fc.entity.Student">
+    update student
+    set stu_name = #{stuName,jdbcType=VARCHAR},
+      stu_pass = #{stuPass,jdbcType=VARCHAR},
+      stu_class = #{stuClass,jdbcType=VARCHAR},
+      stu_sex = #{stuSex,jdbcType=INTEGER},
+      stu_tele = #{stuTele,jdbcType=VARCHAR}
+    where stu_id = #{stuId,jdbcType=VARCHAR}
+  </update>
+</mapper>

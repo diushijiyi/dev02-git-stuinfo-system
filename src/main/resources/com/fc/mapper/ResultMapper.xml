@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.dao.ResultMapper">
+  <resultMap id="BaseResultMap" type="com.fc.entity.Result">
+    <id column="res_id" jdbcType="INTEGER" property="resId" />
+    <result column="stu_id" jdbcType="VARCHAR" property="stuId" />
+    <result column="sub_name" jdbcType="VARCHAR" property="subName" />
+    <result column="res_num" jdbcType="INTEGER" property="resNum" />
+    <result column="res_term" jdbcType="VARCHAR" property="resTerm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    res_id, stu_id, sub_name, res_num, res_term
+  </sql>
+  <select id="selectByExample" parameterType="com.fc.entity.ResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from result
+    where res_id = #{resId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from result
+    where res_id = #{resId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fc.entity.ResultExample">
+    delete from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fc.entity.Result">
+    insert into result (res_id, stu_id, sub_name, 
+      res_num, res_term)
+    values (#{resId,jdbcType=INTEGER}, #{stuId,jdbcType=VARCHAR}, #{subName,jdbcType=VARCHAR}, 
+      #{resNum,jdbcType=INTEGER}, #{resTerm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fc.entity.Result">
+    insert into result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="resId != null">
+        res_id,
+      </if>
+      <if test="stuId != null">
+        stu_id,
+      </if>
+      <if test="subName != null">
+        sub_name,
+      </if>
+      <if test="resNum != null">
+        res_num,
+      </if>
+      <if test="resTerm != null">
+        res_term,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="resId != null">
+        #{resId,jdbcType=INTEGER},
+      </if>
+      <if test="stuId != null">
+        #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="resNum != null">
+        #{resNum,jdbcType=INTEGER},
+      </if>
+      <if test="resTerm != null">
+        #{resTerm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fc.entity.ResultExample" resultType="java.lang.Long">
+    select count(*) from result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update result
+    <set>
+      <if test="record.resId != null">
+        res_id = #{record.resId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuId != null">
+        stu_id = #{record.stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subName != null">
+        sub_name = #{record.subName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resNum != null">
+        res_num = #{record.resNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.resTerm != null">
+        res_term = #{record.resTerm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update result
+    set res_id = #{record.resId,jdbcType=INTEGER},
+      stu_id = #{record.stuId,jdbcType=VARCHAR},
+      sub_name = #{record.subName,jdbcType=VARCHAR},
+      res_num = #{record.resNum,jdbcType=INTEGER},
+      res_term = #{record.resTerm,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fc.entity.Result">
+    update result
+    <set>
+      <if test="stuId != null">
+        stu_id = #{stuId,jdbcType=VARCHAR},
+      </if>
+      <if test="subName != null">
+        sub_name = #{subName,jdbcType=VARCHAR},
+      </if>
+      <if test="resNum != null">
+        res_num = #{resNum,jdbcType=INTEGER},
+      </if>
+      <if test="resTerm != null">
+        res_term = #{resTerm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where res_id = #{resId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fc.entity.Result">
+    update result
+    set stu_id = #{stuId,jdbcType=VARCHAR},
+      sub_name = #{subName,jdbcType=VARCHAR},
+      res_num = #{resNum,jdbcType=INTEGER},
+      res_term = #{resTerm,jdbcType=VARCHAR}
+    where res_id = #{resId,jdbcType=INTEGER}
+  </update>
+</mapper>
