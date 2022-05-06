@@ -3,8 +3,12 @@ package com.fc.dao;
 import com.fc.entity.Student;
 import com.fc.entity.StudentExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Mapper
 public interface StudentMapper {
     long countByExample(StudentExample example);
 
@@ -27,4 +31,10 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+    Student login(@Param("stuName") String stuName, @Param("stuPass") String stuPass);
+
+    Student selectByName(String stuName);
+
+    int insertStudentHavaPass(Student student);
 }

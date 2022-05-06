@@ -3,8 +3,10 @@ package com.fc.dao;
 import com.fc.entity.Teacher;
 import com.fc.entity.TeacherExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface TeacherMapper {
     long countByExample(TeacherExample example);
 
@@ -27,4 +29,10 @@ public interface TeacherMapper {
     int updateByPrimaryKeySelective(Teacher record);
 
     int updateByPrimaryKey(Teacher record);
+
+    Teacher login(@Param("teaName") String teaName, @Param("teaPass") String teaPass);
+
+    String selectIdByName(String teaName);
+
+    int addTeacherHavePass(Teacher teacher);
 }

@@ -3,8 +3,12 @@ package com.fc.dao;
 import com.fc.entity.Class;
 import com.fc.entity.ClassExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.junit.internal.Classes;
+
+@Mapper
 public interface ClassMapper {
     long countByExample(ClassExample example);
 
@@ -27,4 +31,6 @@ public interface ClassMapper {
     int updateByPrimaryKeySelective(Class record);
 
     int updateByPrimaryKey(Class record);
+
+    List<Class> getAllClass();
 }
