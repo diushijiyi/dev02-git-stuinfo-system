@@ -9,6 +9,4 @@ public class Dev02GitStuinfoSystemApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Dev02GitStuinfoSystemApplication.class, args);
-    }
-
-}
+    }}
