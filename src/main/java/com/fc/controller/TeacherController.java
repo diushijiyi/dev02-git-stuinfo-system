@@ -48,7 +48,7 @@ public class TeacherController {
         model.addAttribute("tea",tea);
         return "tea/updatetea";
     }
-    @PostMapping("updateTeaMsg")
+    @PutMapping ("updateTeaMsg")
     public String updateTeaMsg(@Valid Teacher teacher, BindingResult bindingResult, Model model, HttpSession httpSession){
         List<ObjectError> allErrors = bindingResult.getAllErrors();
         List<MyError> errmsg = new ArrayList<>();

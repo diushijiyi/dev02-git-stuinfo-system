@@ -1,5 +1,6 @@
 package com.fc.interceptor;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -9,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 登陆检查，
  */
-
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     //目标方法执行之前
     @Override

@@ -18,7 +18,3 @@ mybatis:
 pagehelper:
   reasonable: true
   auto-dialect: true
-server:
-  port: 8080
-  tomcat:
-    uri-encoding: utf-8
