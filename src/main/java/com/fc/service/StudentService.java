@@ -10,4 +10,6 @@ public interface StudentService {
     int deleStu(String stuId);
 
     int addStudentHavePass(Student student);
+
+    String selectIdByName(String login);
 }

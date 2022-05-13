@@ -2,9 +2,13 @@ package com.fc.controller;
 
 import com.fc.entity.Class;
 import com.fc.entity.MyError;
+import com.fc.entity.Result;
 import com.fc.entity.Student;
 import com.fc.service.ClassService;
+import com.fc.service.ResultService;
 import com.fc.service.StudentService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.internal.Classes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +30,8 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private ClassService classService;
+    @Autowired
+    private ResultService resultService;
     @PostMapping("login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password, Map<String,Object> map, HttpSession session)
@@ -83,4 +89,17 @@ public class StudentController {
             return "stu/updateStu";
         }
     }
+    //返回学生成绩首页
+    @GetMapping(value = "/toresdmin/{pn}")
+    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
+    {
+        String login=(String) httpSession.getAttribute("loginUser");
+        String loginId=studentService.selectIdByName(login);
+        PageHelper.startPage(pn, 9);
+        List<Result> resultsses = resultService.selectByStuId(loginId);
+        PageInfo<Result> page = new PageInfo<Result>(resultsses, 5);
+        model.addAttribute("pageInfo",page);
+        return "stu/resultlist";
+    }
+
 }

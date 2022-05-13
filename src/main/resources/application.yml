@@ -5,6 +5,12 @@ spring:
     url: jdbc:mysql://localhost:3306/stuinfosystem?useSSL=false&useUnicode=true&characterEncoding=UTF8&serverTimeZone=GTM+8
     username: root
     password: 123456
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+  http:
+    encoding:
+      charset: UTF-8
 mybatis:
   mapper-locations: com/fc/mapper/*.xml
   type-aliases-package: com.fc.entity
@@ -16,5 +22,10 @@ mybatis:
     aggressive-lazy-loading: false
     map-underscore-to-camel-case: true
 pagehelper:
+  helperDialect: mysql
   reasonable: true
-  auto-dialect: true
+  supportMethodsArguments: true
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8

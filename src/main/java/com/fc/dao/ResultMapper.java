@@ -3,8 +3,10 @@ package com.fc.dao;
 import com.fc.entity.Result;
 import com.fc.entity.ResultExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface ResultMapper {
     long countByExample(ResultExample example);
 
@@ -27,4 +29,8 @@ public interface ResultMapper {
     int updateByPrimaryKeySelective(Result record);
 
     int updateByPrimaryKey(Result record);
+
+    List<Result> selectByStuId(String loginId);
+
+    List<Result> getAllResult();
 }

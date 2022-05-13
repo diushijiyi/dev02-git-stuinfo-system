@@ -6,6 +6,8 @@ import com.fc.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StudentServiceImpl implements StudentService {
     @Autowired
@@ -29,4 +31,10 @@ public class StudentServiceImpl implements StudentService {
     public int addStudentHavePass(Student student) {
         return studentMapper.insertStudentHavaPass(student);
     }
+
+    @Override
+    public String selectIdByName(String login) {
+        return studentMapper.selectIdByName(login);
+    }
+
 }

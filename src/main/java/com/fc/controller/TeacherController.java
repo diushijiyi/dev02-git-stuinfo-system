@@ -1,8 +1,15 @@
 package com.fc.controller;
 
+import com.fc.entity.Class;
 import com.fc.entity.MyError;
+import com.fc.entity.Result;
 import com.fc.entity.Student;
 import com.fc.entity.Teacher;
+import com.fc.service.ClassService;
+import com.fc.service.ResultService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.junit.internal.Classes;
 import org.springframework.ui.Model;
 import com.fc.service.TeacherService;
 import com.fc.service.impl.TeacherServiceImpl;
@@ -22,6 +29,10 @@ import java.util.Map;
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private ResultService resultService;
+    @Autowired
+    private ClassService classService;
     @PostMapping("login")
     public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password, Map<String,Object> map, HttpSession session) {
@@ -75,5 +86,17 @@ public class TeacherController {
             model.addAttribute("tea",teacher);
             return "tea/updatetea";
         }
+    }
+    //返回成绩管理首页
+    @GetMapping(value = "/toteadmin/{pn}")
+    public String toteadmin(@PathVariable("pn") Integer pn, Model model)
+    {
+        PageHelper.startPage(pn, 6);
+        List<Result> resultsses=resultService.getAllResult();
+        PageInfo<Result> page = new PageInfo<Result>(resultsses, 5);
+        List<Class> classes = classService.getAllClass();
+        model.addAttribute("classes",classes);
+        model.addAttribute("pageInfo",page);
+        return "tea/tearesultlist";
     }
 }
