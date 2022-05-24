@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fc.dao.ResultMapper">
+  <select id="selectRankByTermAndStuId" resultType="com.fc.entity.Rank">
+    select @rownum:=@rownum+1 AS rownum,stu_id,stu_allres,res_term from (SELECT @rownum:=0) r
+    ,(select res_term,stu_id,sum(res_num)as'stu_allres' from result,(SELECT @rownum:=0) r
+    where  res_term=#{resTerm} and stu_id in
+    <foreach collection='stuId' item='stuId' open='(' separator=',' close=')'>
+    #{stuId}
+    </foreach>
+    GROUP BY stu_id ORDER BY sum(res_num) DESC) w
+  </select>
+  <select id="selectResultMap" resultType="java.util.Map">
+    select sub_name,res_num from result where stu_id=#{stuId} and res_term=#{resTerm}
+  </select>
+  <select id="selectRankByTerm" resultType="com.fc.entity.Rank">
+    select @rownum:=@rownum+1 AS rownum,stu_id,stu_allres,res_term from (SELECT @rownum:=0) r
+            ,(select res_term,stu_id,sum(res_num)as'stu_allres' from result,(SELECT @rownum:=0) r
+            where res_term=#{resTerm} GROUP BY stu_id ORDER BY sum(res_num) DESC) w
+  </select>
+  <delete id="deleteResultById">
+    DELETE from result where res_id=#{resId}
+  </delete>
+  <select id="selectResultByResId" resultType="com.fc.entity.Result">
+    select * from result where res_id=#{resId}
+  </select>
+  <select id="selectResultByStuIdAndSubName" resultType="com.fc.entity.Result">
+    select * from result where stu_id=#{stuId} and sub_name=#{subName}
+  </select>
+  <select id="selectResByTerm" resultType="com.fc.entity.Result">
+    select * from result where res_term=#{resTerm} and stu_id=#{loginId}
+  </select>
   <select id="getAllResult" resultType="com.fc.entity.Result">
     select * from result
   </select>

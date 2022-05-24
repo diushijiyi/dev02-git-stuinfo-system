@@ -6,6 +6,8 @@ import com.fc.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TeacherServiceImpl implements TeacherService {
     @Autowired
@@ -33,5 +35,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public int addTeacherHavePass(Teacher teacher) {
         return teacherMapper.addTeacherHavePass(teacher);
+    }
+
+    @Override
+    public List<Teacher> getAllTeacher() {
+        return teacherMapper.getAllTeacher();
+    }
+
+    @Override
+    public int addTeacher(Teacher teacher) {
+        return teacherMapper.addTeacher(teacher);
     }
 }

@@ -13,13 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
-
-
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//       // super.addViewControllers(registry);
-//    }
-
     //所有的WebMvcConfigurerAdapter组件都会一起起作用
     @Bean //将组件注册在容器
     public WebMvcConfigurerAdapter webMvcConfigurerAdapter(){

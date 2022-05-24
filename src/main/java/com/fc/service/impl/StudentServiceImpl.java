@@ -37,4 +37,24 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectIdByName(login);
     }
 
+    @Override
+    public Student selectById(String stuId) {
+        return studentMapper.selectById(stuId);
+    }
+
+    @Override
+    public List<Student> getAllStudent() {
+        return studentMapper.getAllStudent();
+    }
+
+    @Override
+    public int addStudent(Student stu) {
+        return studentMapper.addStudent(stu);
+    }
+
+    @Override
+    public List<Student> selectStuByStuClass(String stuClass) {
+        return studentMapper.selectStuByStuClass(stuClass);
+    }
+
 }

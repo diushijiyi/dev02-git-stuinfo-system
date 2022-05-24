@@ -7,10 +7,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class CommonController {
-    @GetMapping("logout")
+    //退出登录
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redircet:/index.html";
+        return "redirect:/index.html";
     }
 
 }

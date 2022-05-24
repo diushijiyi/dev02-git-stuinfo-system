@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fc.dao.StudentMapper">
+  <insert id="addStudent">
+    insert into student (stu_id,stu_name,stu_class,stu_sex,stu_tele) values
+            (#{stuId},#{stuName},#{stuClass},#{stuSex},#{stuTele})
+  </insert>
+  <select id="selectStuByStuClass" resultType="com.fc.entity.Student">
+    SELECT * from student where stu_class=#{stuClass}
+  </select>
+  <select id="getAllStudent" resultType="com.fc.entity.Student">
+    select * from student
+  </select>
+  <select id="selectIdByClass" resultType="java.lang.String">
+    select stu_id from student where stu_class=#{stuClass}
+  </select>
+  <select id="selectNameById" resultType="java.lang.String">
+    select stu_name from student where stu_id=#{stuId}
+  </select>
+  <select id="selectById" resultType="com.fc.entity.Student">
+    select * from student where stu_id=#{stuId}
+  </select>
   <select id="selectIdByName" resultType="java.lang.String">
     select stu_id from student where stu_name=#{login}
   </select>

@@ -39,4 +39,16 @@ public interface StudentMapper {
     int insertStudentHavaPass(Student student);
 
     String selectIdByName(String login);
+
+    Student selectById(String stuId);
+
+    String selectNameById(String stuId);
+
+    List<String> selectIdByClass(String stuClass);
+
+    List<Student> getAllStudent();
+
+    List<Student> selectStuByStuClass(String stuClass);
+
+    int addStudent(Student stu);
 }

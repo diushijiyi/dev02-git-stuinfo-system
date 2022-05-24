@@ -33,4 +33,12 @@ public interface ClassMapper {
     int updateByPrimaryKey(Class record);
 
     List<Class> getAllClass();
+
+    Class selectClassByName(String className);
+
+    Class selectById(String classId);
+
+    int addClass(Class classes);
+
+    int deleteById(String classId);
 }

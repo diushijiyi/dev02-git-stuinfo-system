@@ -15,4 +15,24 @@ public class ClassServiceImpl implements ClassService {
     public List<Class> getAllClass() {
         return classMapper.getAllClass();
     }
+
+    @Override
+    public Class selectByName(String className) {
+        return classMapper.selectClassByName(className);
+    }
+
+    @Override
+    public Class selectById(String classId) {
+        return classMapper.selectById(classId);
+    }
+
+    @Override
+    public int addClass(Class classes) {
+        return classMapper.addClass(classes);
+    }
+
+    @Override
+    public int deleteById(String classId) {
+        return classMapper.deleteById(classId);
+    }
 }

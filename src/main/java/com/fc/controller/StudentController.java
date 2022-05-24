@@ -9,7 +9,7 @@ import com.fc.service.ResultService;
 import com.fc.service.StudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.junit.internal.Classes;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +32,10 @@ public class StudentController {
     private ClassService classService;
     @Autowired
     private ResultService resultService;
+    //学生登录
     @PostMapping("login")
     public String login(@RequestParam("username") String username,
-                        @RequestParam("password") String password, Map<String,Object> map, HttpSession session)
-    {
+                        @RequestParam("password") String password, Map<String,Object> map, HttpSession session) {
         Student stu=studentService.login(username,password);
         if(stu!=null)
         {
@@ -48,10 +48,12 @@ public class StudentController {
             return  "login";
         }
     }
+    //学生返回首页
     @GetMapping("toindex")
     public String toIndex(){
         return "redirect:/stumain.html";
     }
+    //学生信息修改
     @GetMapping("toUpdateMsgPage")
     public String toUpdateMsgPage(HttpSession httpSession, Model model){
         Student stu= studentService.selectByName((String) httpSession.getAttribute("loginUser"));
@@ -60,6 +62,7 @@ public class StudentController {
         model.addAttribute("class",classes);
         return "stu/updateStu";
     }
+    //更新学生信息
     @PutMapping("updateStuMsg")
     public String updateStuMsg(@Valid Student student, BindingResult bindingResult, Model model, HttpSession httpSession){
         List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -90,9 +93,8 @@ public class StudentController {
         }
     }
     //返回学生成绩首页
-    @GetMapping(value = "/toresdmin/{pn}")
-    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession)
-    {
+    @GetMapping("toresdmin/{pn}")
+    public String toresdmin(@PathVariable("pn") Integer pn,Model model,HttpSession httpSession) {
         String login=(String) httpSession.getAttribute("loginUser");
         String loginId=studentService.selectIdByName(login);
         PageHelper.startPage(pn, 9);
@@ -101,5 +103,15 @@ public class StudentController {
         model.addAttribute("pageInfo",page);
         return "stu/resultlist";
     }
-
+    //学生根据学期成绩查询
+    @GetMapping("selectResByTerm/{pn}")
+    public String selectResByTerm(@PathVariable("pn") Integer pn,Model model,HttpSession session,@Param("resTerm") String resTerm){
+        PageHelper.startPage(pn, 9);
+        String login=(String) session.getAttribute("loginUser");
+        String loginId=studentService.selectIdByName(login);
+        List<Result> results=resultService.selectResByTerm(loginId,resTerm);
+        PageInfo<Result> page = new PageInfo<Result>(results, 5);
+        model.addAttribute("pageInfo",page);
+        return "stu/reslistbyterm";
+    }
 }

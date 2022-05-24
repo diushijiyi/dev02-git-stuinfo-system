@@ -35,4 +35,8 @@ public interface TeacherMapper {
     String selectIdByName(String teaName);
 
     int addTeacherHavePass(Teacher teacher);
+
+    List<Teacher> getAllTeacher();
+
+    int addTeacher(Teacher teacher);
 }

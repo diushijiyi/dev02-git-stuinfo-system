@@ -1,8 +1,10 @@
 package com.fc.dao;
 
+import com.fc.entity.Rank;
 import com.fc.entity.Result;
 import com.fc.entity.ResultExample;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -33,4 +35,18 @@ public interface ResultMapper {
     List<Result> selectByStuId(String loginId);
 
     List<Result> getAllResult();
+
+    List<Result> selectResByTerm(@Param("loginId") String loginId, @Param("resTerm") String resTerm);
+
+    Result selectResultByStuIdAndSubName(@Param("stuId")String stuId,@Param("subName")String subName);
+
+    Result selectResultByResId(int resId);
+
+    int deleteResultById(int resId);
+
+    List<Rank> selectRankByTerm(String resTerm);
+
+    List<Map<String, Integer>> selectResultMap(@Param("stuId") String stuId,@Param("resTerm") String resTerm);
+
+    List<Rank> selectRankByTermAndStuId(@Param("stuId") List<String> stuId,@Param("resTerm") String resTerm);
 }
